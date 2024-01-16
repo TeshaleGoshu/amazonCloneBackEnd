@@ -8,6 +8,7 @@ const stripe = require("stripe")(
 );
 // app config
 const app = express();
+const port=5000;
 // Middlewares
 app.use(cors({ origin: true }));
 app.use(express.json());
@@ -21,12 +22,12 @@ app.post('/payments/create',async (request,response)=>{
         currency:'GBP'
         
     })
-    response.status(201).send({
-        clientSecret:paymentIntent.client_secret,
-    })
+    response.status(201).send({clientSecret:paymentIntent.client_secret});
 })
 
 // listen command
-exports.api = functions.https.onRequest(app);
-
+// exports.api = functions.https.onRequest(app);
+app.listen(port,()=>{
+    console.log('listening to port',port)
+})
 
